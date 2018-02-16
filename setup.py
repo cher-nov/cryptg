@@ -25,12 +25,12 @@ def main():
             long_description = f.read()
 
         module = Extension('cryptg',
-                           sources=['cryptgmodule.c', 'aes.c'],
-                           include_dirs='.')
+                           sources=['cryptg/cryptgmodule.c', 'cryptg/aes.c'],
+                           include_dirs='cryptg/')
 
         setup(
             name='cryptg',
-            version='0.1.0.1',
+            version='0.1.0.2',
             description="Cryptographic utilities for Telegram",
             long_description=long_description,
 
