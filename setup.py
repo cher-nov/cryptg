@@ -14,7 +14,8 @@ def main():
         for x in ('build', 'dist', 'cryptg.egg-info'):
             rmtree(x, ignore_errors=True)
         run('python3 setup.py sdist', shell=True)
-        run('python3 setup.py bdist_wheel', shell=True)
+        # Binary wheels not yet supported
+        # run('python3 setup.py bdist_wheel', shell=True)
         run('twine upload dist/*', shell=True)
         for x in ('build', 'dist', 'cryptg.egg-info'):
             rmtree(x, ignore_errors=True)
@@ -24,11 +25,12 @@ def main():
             long_description = f.read()
 
         module = Extension('cryptg',
-                           sources=['cryptgmodule.c', 'aes.c'])
+                           sources=['cryptgmodule.c', 'aes.c'],
+                           include_dirs='.')
 
         setup(
             name='cryptg',
-            version='0.1',
+            version='0.1.0.1',
             description="Cryptographic utilities for Telegram",
             long_description=long_description,
 

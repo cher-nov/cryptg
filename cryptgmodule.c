@@ -6,9 +6,8 @@ static PyObject *
 encrypt_ige(PyObject *self, PyObject *args)
 {
     struct AES_ctx ctx;
-    const uint8_t *plain, *key, *iv;
-    const int plain_len;
-    int dummy;
+    uint8_t *plain, *key, *iv;
+    int plain_len,  dummy;
 
     if (!PyArg_ParseTuple(args, "y#y#y#",
                           &plain, &plain_len, &key, &dummy, &iv, &dummy))
@@ -24,9 +23,8 @@ static PyObject *
 decrypt_ige(PyObject *self, PyObject *args)
 {
     struct AES_ctx ctx;
-    const uint8_t *cipher, *key, *iv;
-    const int cipher_len;
-    int dummy;
+    uint8_t *cipher, *key, *iv;
+    int cipher_len, dummy;
 
     if (!PyArg_ParseTuple(args, "y#y#y#",
                           &cipher, &cipher_len, &key, &dummy, &iv, &dummy))
