@@ -25,12 +25,12 @@ def main():
             long_description = f.read()
 
         module = Extension('cryptg',
-                           sources=['cryptg/cryptgmodule.c', 'cryptg/aes.c'],
+                           sources=['cryptg/cryptgmodule.c', 'cryptg/aes.c', 'cryptg/aes.h', 'cryptg/aes.hpp'],
                            include_dirs='cryptg/')
 
         setup(
             name='cryptg',
-            version='0.1.0.3',
+            version='0.1.0.4',
             description="Cryptographic utilities for Telegram",
             long_description=long_description,
 
@@ -60,8 +60,7 @@ def main():
             keywords='telegram crypto cryptography mtproto aes',
             packages=find_packages(exclude=[]),
             install_requires=[],
-            ext_modules=[module],
-            headers='cryptg/aes.h'
+            ext_modules=[module]
         )
 
 
