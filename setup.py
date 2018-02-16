@@ -30,7 +30,7 @@ def main():
 
         setup(
             name='cryptg',
-            version='0.1.0.4',
+            version='0.1.0.5',
             description="Cryptographic utilities for Telegram",
             long_description=long_description,
 
@@ -60,7 +60,10 @@ def main():
             keywords='telegram crypto cryptography mtproto aes',
             packages=find_packages(exclude=[]),
             install_requires=[],
-            ext_modules=[module]
+            ext_modules=[module],
+            package_data={
+                '': ['*.h', '*.hpp'],
+            }
         )
 
 
