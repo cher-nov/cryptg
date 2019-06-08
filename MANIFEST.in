@@ -1,0 +1,4 @@
+include build_ffi.py
+graft share
+global-exclude .git*
+global-exclude .git/**

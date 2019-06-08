@@ -1,0 +1,3 @@
+[submodule "share/tiny-AES-c"]
+	path = share/tiny-AES-c
+	url = https://github.com/cher-nov/tiny-AES-c.git
