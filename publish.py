@@ -54,14 +54,12 @@ def main(argv):
         # https://test.pypi.org/help/#file-name-reuse
         # https://www.python.org/dev/peps/pep-0440/#developmental-releases
         os.environ[ENVVAR_VERSION_SUFFIX] =  "dev{}".format(int(time.time()))
-        twine_test_args = ("--repository-url", "https://test.pypi.org/legacy/")
-    else:
-        twine_test_args = ()
+        os.environ["TWINE_REPOSITORY_URL"] = "https://test.pypi.org/legacy/"
 
     try:
         execute("setup.py", "sdist")
         #execute("setup.py", "bdist_wheel")
-        execute("twine", "upload", *twine_test_args, "dist/*", module=True)
+        execute("twine", "upload", "dist/*", module=True)
     finally:
         purge(True)
 
