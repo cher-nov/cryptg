@@ -6,7 +6,7 @@ import os
 from setuptools import find_packages, setup
 
 PACKAGE_NAME = "cryptg"
-PACKAGE_VERSION = "0.2"
+PACKAGE_VERSION = "0.2.post0"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
 
