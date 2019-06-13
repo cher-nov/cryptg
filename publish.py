@@ -17,7 +17,7 @@ def execute(*args, module=False):
     # there's no standard portable way to call Python3 explicitly
     # https://docs.python.org/3/using/windows.html
     shell_args = (sys.executable, *(("-m",) if module else ()), *args)
-    subprocess.check_call(shell_args, shell=True)
+    subprocess.check_call(shell_args)
 
 def purge(skip_errors):
     # shutil.rmtree fails on read-only files in Windows
