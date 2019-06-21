@@ -8,8 +8,8 @@ import stat
 import shutil
 import subprocess
 
-sys.dont_write_bytecode = True  # prevent __pycache__ on importing 'setup'
-sys.path.insert(0, os.path.realpath(__file__))  # ensure to import './setup.py'
+sys.dont_write_bytecode = True  # prevent __pycache__ on importing './setup.py'
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__))
 from setup import PACKAGE_NAME, PACKAGE_VERSION, ENVVAR_VERSION_SUFFIX
 
 
@@ -36,8 +36,8 @@ def purge(skip_errors):
         except FileNotFoundError:
             pass
 
-def main(argv):
-    if "testpip" in argv:
+def main(args):
+    if "testpip" in args:
         execute(
             "pip", "install",
             "--pre", "--force-reinstall", "--no-cache-dir",
@@ -50,7 +50,7 @@ def main(argv):
 
     purge(False)
 
-    if "testpypi" in argv:
+    if "testpypi" in args:
         # https://test.pypi.org/help/#file-name-reuse
         # https://www.python.org/dev/peps/pep-0440/#developmental-releases
         os.environ[ENVVAR_VERSION_SUFFIX] =  "dev{}".format(int(time.time()))

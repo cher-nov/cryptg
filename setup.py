@@ -10,7 +10,7 @@ PACKAGE_VERSION = "0.2.post0"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
 
-def main(argv):
+def main(args):
     with open("README.rst", encoding='utf-8') as f:
         long_description = f.read()
 
