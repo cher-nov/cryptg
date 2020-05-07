@@ -9,6 +9,11 @@ PACKAGE_NAME = "cryptg"
 PACKAGE_VERSION = "0.2.post1"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
+_PACKAGE_DEPENDENCIES = [
+    "cffi>=1.0.0",  # TODO: they promise to separate _cffi_backend later
+    "pycparser"  # CPython's 'cffi' contains that, bun not the PyPi's one
+]
+
 
 def main(args):
     with open("README.rst", encoding='utf-8') as f:
@@ -50,11 +55,8 @@ def main(args):
 
         packages=find_packages(),
         python_requires=">=3.3",
-        install_requires=[
-            "cffi>=1.0.0",  # TODO: they promise to separate _cffi_backend later
-            "pycparser"  # just an ensurance: it's available anyway from 'cffi'
-        ],
-        setup_requires=["cffi>=1.0.0"],
+        install_requires=_PACKAGE_DEPENDENCIES,
+        setup_requires=_PACKAGE_DEPENDENCIES,
         cffi_modules=["build_ffi.py:ffibuilder"]
     )
 
