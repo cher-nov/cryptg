@@ -17,7 +17,7 @@ matrix:
 
 env:
   global:
-  - CIBW_SKIP="cp27-*"
+  - CIBW_SKIP="?p27-*"
   - CIBW_BUILD_VERBOSITY=3
   - BUILD_OUTPUT_PATH="wheelhouse"
   - TWINE_USERNAME="cher-nov"
