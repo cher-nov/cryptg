@@ -16,23 +16,26 @@ environment:
   TWINE_PASSWORD:
     secure: hO+NR4mHqJGS/q3EBSvAgw==
 
+# NB: 'py' launcher is Windows-specific, so care must be taken if trying to
+# improve this build script for using Linux facilities provided by AppVeyor!
+
 install: |
   git submodule update --init --recursive
-  pip install twine cibuildwheel
+  py -3 -m pip install twine cibuildwheel
 
 before_build: >
   IF DEFINED CI_TEST_LAUNCH
   SET "PYPI_SETUP_VERSION_SUFFIX=dev999%APPVEYOR_BUILD_ID%";
 
 build_script: |
-  cibuildwheel --output-dir "%BUILD_OUTPUT_PATH%"
+  py -3 -m cibuildwheel --output-dir "%BUILD_OUTPUT_PATH%"
 
 before_deploy: >
   IF DEFINED CI_TEST_LAUNCH
   SET "TWINE_REPOSITORY_URL=https://test.pypi.org/legacy/";
 
 deploy_script: |
-  twine upload --skip-existing "%BUILD_OUTPUT_PATH%/*.whl"
+  py -3 -m twine upload --skip-existing "%BUILD_OUTPUT_PATH%/*.whl"
 
 artifacts:
 - path: "%BUILD_OUTPUT_PATH%/*.whl"
