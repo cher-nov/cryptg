@@ -16,13 +16,8 @@ fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     }
     iv_array.copy_from_slice(iv);
 
-    Python::with_gil(|py| {
-        Ok(PyBytes::new(
-            py,
-            &grammers_crypto::encrypt_ige(plain, &key_array, &iv_array),
-        )
-        .into())
-    })
+    let cipher = grammers_crypto::encrypt_ige(plain, &key_array, &iv_array);
+    Python::with_gil(|py| Ok(PyBytes::new(py, &cipher).into()))
 }
 
 /// Decrypts the input cipher text with the 32 bytes key and IV.
@@ -41,13 +36,8 @@ fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     }
     iv_array.copy_from_slice(iv);
 
-    Python::with_gil(|py| {
-        Ok(PyBytes::new(
-            py,
-            &grammers_crypto::decrypt_ige(cipher, &key_array, &iv_array),
-        )
-        .into())
-    })
+    let plain = grammers_crypto::decrypt_ige(cipher, &key_array, &iv_array);
+    Python::with_gil(|py| Ok(PyBytes::new(py, &plain).into()))
 }
 
 #[pymodule]
