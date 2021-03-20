@@ -30,7 +30,7 @@ def main(args):
         author="Dmitry D. Chernov; Lonami E",
         author_email="blackdoomer@yandex.ru",
 
-        license="MIT",
+        license="CC0",
 
         # https://pypi.python.org/pypi?:action=list_classifiers
         classifiers=[
@@ -39,7 +39,7 @@ def main(args):
             "Intended Audience :: Developers",
             "Topic :: Security :: Cryptography",
 
-            'License :: OSI Approved :: MIT License',
+            'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
 
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.3",
