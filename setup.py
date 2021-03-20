@@ -39,7 +39,7 @@ def main(args):
             "Intended Audience :: Developers",
             "Topic :: Security :: Cryptography",
 
-            'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+            "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
 
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.3",
