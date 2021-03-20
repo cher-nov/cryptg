@@ -17,3 +17,8 @@ Desktop.ini
 .DS_Store
 *.bak
 *.tmp
+
+**/target
+**/*.rs.bk
+Cargo.lock
+*.so

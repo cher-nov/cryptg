@@ -4,15 +4,11 @@ import sys
 import os
 
 from setuptools import find_packages, setup
+from setuptools_rust import RustExtension
 
 PACKAGE_NAME = "cryptg"
-PACKAGE_VERSION = "0.2.post2"
+PACKAGE_VERSION = "0.3"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
-
-_PACKAGE_DEPENDENCIES = [
-    "cffi>=1.0.0",  # TODO: they promise to separate _cffi_backend later
-    "pycparser"  # CPython's 'cffi' contains that, bun not the PyPi's one
-]
 
 
 def main(args):
@@ -31,10 +27,10 @@ def main(args):
         url=url,
         download_url=url+"/releases",
 
-        author="Dmitry D. Chernov",
+        author="Dmitry D. Chernov; Lonami E",
         author_email="blackdoomer@yandex.ru",
 
-        license="CC0",
+        license="MIT",
 
         # https://pypi.python.org/pypi?:action=list_classifiers
         classifiers=[
@@ -43,7 +39,7 @@ def main(args):
             "Intended Audience :: Developers",
             "Topic :: Security :: Cryptography",
 
-            "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
+            'License :: OSI Approved :: MIT License',
 
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.3",
@@ -55,9 +51,8 @@ def main(args):
 
         packages=find_packages(),
         python_requires=">=3.3",
-        install_requires=_PACKAGE_DEPENDENCIES,
-        setup_requires=_PACKAGE_DEPENDENCIES,
-        cffi_modules=["build_ffi.py:ffibuilder"]
+        rust_extensions=[RustExtension("cryptg.cryptg")],
+        zip_safe=False,
     )
 
 
