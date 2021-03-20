@@ -3,6 +3,7 @@ use pyo3::wrap_pyfunction;
 
 /// Encrypts the input plain text with the 32 bytes key and IV.
 #[pyfunction]
+#[text_signature = "(plain, key, iv)"]
 fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Vec<u8>> {
     let mut key_array = [0; 32];
     if key.len() != key_array.len() {
@@ -21,6 +22,7 @@ fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Vec<u8>> {
 
 /// Decrypts the input cipher text with the 32 bytes key and IV.
 #[pyfunction]
+#[text_signature = "(cipher, key, iv)"]
 fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Vec<u8>> {
     let mut key_array = [0; 32];
     if key.len() != key_array.len() {
