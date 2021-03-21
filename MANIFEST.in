@@ -1,4 +1,4 @@
-include build_ffi.py
-graft share
+include Cargo.toml
+recursive-include src *
 global-exclude .git*
 global-exclude .git/**
