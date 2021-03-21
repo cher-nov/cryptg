@@ -14,6 +14,11 @@ jobs:
         os: [ubuntu-20.04, windows-2019, macOS-10.15]
         python-version: ["3.5", "3.6", "3.7", "3.8"]
 
+    env:
+      CIBW_SKIP: ?p27-*
+      CIBW_BUILD_VERBOSITY: 3
+      BUILD_OUTPUT_PATH: wheelhouse
+
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -21,15 +26,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install requirements
-        run: python -m pip install --upgrade pip
-        run: python -m pip install -r requirements.txt
+        run: |
+          curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=stable
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
 
       - name: Install cibuildwheel
         run: python -m pip install cibuildwheel==1.10.0
 
       - name: Build wheels
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: python -m cibuildwheel --output-dir "$BUILD_OUTPUT_PATH"
 
       - uses: actions/upload-artifact@v2
         with:
-          path: ./wheelhouse/*.whl
+          path: "./$BUILD_OUTPUT_PATH/*.whl"
