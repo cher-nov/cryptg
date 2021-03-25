@@ -9,7 +9,7 @@ import shutil
 import subprocess
 
 sys.dont_write_bytecode = True  # prevent __pycache__ on importing './setup.py'
-sys.path.insert(0, os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from setup import PACKAGE_NAME, PACKAGE_VERSION, ENVVAR_VERSION_SUFFIX
 
 
