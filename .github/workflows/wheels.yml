@@ -14,8 +14,10 @@ jobs:
         os: [ubuntu-20.04, windows-2019, macOS-10.15]
 
     env:
-      CIBW_SKIP: ?p27-*
+      CIBW_SKIP: "?p27-* ?p35-*"
       CIBW_BUILD_VERBOSITY: 3
+      CIBW_BEFORE_BUILD: "python -m pip install --upgrade pip && python -m pip install --upgrade wheel setuptools setuptools-rust"
+      CIBW_BEFORE_BUILD_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=stable"
       BUILD_OUTPUT_PATH: wheelhouse
 
     steps:
