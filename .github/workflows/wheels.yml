@@ -7,12 +7,11 @@ on:
 
 jobs:
   build_wheels:
-    name: Build wheels for ${{ matrix.python-version }} on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-20.04, windows-2019, macOS-10.15]
-        python-version: ["3.5", "3.6", "3.7", "3.8"]
 
     env:
       CIBW_SKIP: ?p27-*
@@ -22,9 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-
       - name: Install requirements
         run: |
           curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=stable
