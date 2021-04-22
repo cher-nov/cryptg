@@ -1,0 +1,2 @@
+# to avoid broken shebangs in .tar.gz source distributions
+*.py text eol=lf

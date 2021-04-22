@@ -1,6 +1,6 @@
 branches:
   only:
-  - master
+  - final_tiny-aes-c
 
 pull_requests:
   do_not_increment_build_number: true
@@ -9,7 +9,7 @@ skip_non_tags: true
 test: off
 
 environment:
-  CIBW_SKIP: ?p27-*
+  CIBW_SKIP: ?p27-* ?p35-*
   CIBW_BUILD_VERBOSITY: 3
   BUILD_OUTPUT_PATH: wheelhouse
   TWINE_USERNAME: cher-nov

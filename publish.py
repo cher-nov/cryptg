@@ -53,7 +53,7 @@ def main(args):
     if "testpypi" in args:
         # https://test.pypi.org/help/#file-name-reuse
         # https://www.python.org/dev/peps/pep-0440/#developmental-releases
-        os.environ[ENVVAR_VERSION_SUFFIX] =  "dev{}".format(int(time.time()))
+        os.environ[ENVVAR_VERSION_SUFFIX] =  ".dev{}".format(int(time.time()))
         os.environ["TWINE_REPOSITORY_URL"] = "https://test.pypi.org/legacy/"
 
     try:

@@ -1,7 +1,7 @@
 branches:
   only:
   - /^[0-9]+\.[0-9]+.*/
-  - master
+  - final_tiny-aes-c
 
 if: tag IS present OR type = api
 
@@ -17,8 +17,8 @@ matrix:
 
 env:
   global:
-  - CIBW_SKIP="?p27-*"
-  - CIBW_BUILD_VERBOSITY=3
+  - CIBW_SKIP="?p27-* ?p35-*"
+  - CIBW_BUILD_VERBOSITY=0  # Travis-CI have a log length limit
   - BUILD_OUTPUT_PATH="wheelhouse"
   - TWINE_USERNAME="cher-nov"
   - secure:

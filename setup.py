@@ -6,7 +6,7 @@ import os
 from setuptools import find_packages, setup
 
 PACKAGE_NAME = "cryptg"
-PACKAGE_VERSION = "0.2.post2"
+PACKAGE_VERSION = "0.2.post4"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
 _PACKAGE_DEPENDENCIES = [
@@ -46,15 +46,12 @@ def main(args):
             "License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication",
 
             "Programming Language :: Python :: 3",
-            "Programming Language :: Python :: 3.3",
-            "Programming Language :: Python :: 3.4",
-            "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6"
         ],
         keywords="telegram crypto cryptography mtproto aes",
 
         packages=find_packages(),
-        python_requires=">=3.3",
+        python_requires=">=3.6",
         install_requires=_PACKAGE_DEPENDENCIES,
         setup_requires=_PACKAGE_DEPENDENCIES,
         cffi_modules=["build_ffi.py:ffibuilder"]
