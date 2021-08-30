@@ -11,9 +11,10 @@ jobs:
         os: [ubuntu-20.04]  # windows-2019, macOS-10.15
 
     env:
-      CIBW_SKIP: "?p27-* ?p35-*"
-      CIBW_BUILD_VERBOSITY: 3
-      CIBW_BEFORE_BUILD: "curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain=stable && source $HOME/.cargo/env && python -m pip install --upgrade pip && python -m pip install --upgrade wheel setuptools setuptools-rust"
+      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=stable -y"
+      CIBW_BUILD_VERBOSITY: "3"
+      CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
+      CIBW_SKIP: "?p27-* ?p35-* pp* *-win32"
       BUILD_OUTPUT_PATH: wheelhouse
 
     steps:
