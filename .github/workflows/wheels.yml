@@ -1,6 +1,9 @@
 name: Build
 
-on: push
+on:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build_wheels:
@@ -8,34 +11,44 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macOS-10.15]
-
-    env:
-      CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain=stable -y"
-      CIBW_BUILD_VERBOSITY: "3"
-      CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
-      CIBW_SKIP: "?p27-* ?p35-* pp* *-win32"
-      BUILD_OUTPUT_PATH: wheelhouse
+        os: [ubuntu-20.04, windows-2019, macos-10.15]
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - name: Install requirements
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-
-      - name: Install cibuildwheel
-        run: python -m pip install cibuildwheel==2.1.1
-
-      - name: Build wheels
-        run: python -m cibuildwheel --output-dir "${{ env.BUILD_OUTPUT_PATH }}"
+      - uses: pypa/cibuildwheel@v2.1.2
+        env:
+          CIBW_BUILD_VERBOSITY: "1"
+          CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && yum install -y openssl-devel"
+          CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
+          CIBW_SKIP: "pp* *-win32 cp37* cp38* cp39* cp10*"
 
       - uses: actions/upload-artifact@v2
         with:
-          path: "./${{ env.BUILD_OUTPUT_PATH }}/*.whl"
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Build sdist
+        run: python -m pip install -r requirements.txt && python setup.py sdist
+      - uses: actions/upload-artifact@v2
+        with:
+          path: dist/*.tar.gz
+
+  upload_pypi:
+      needs: [build_wheels, build_sdist]
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/download-artifact@v2
+          with:
+            name: artifact
+            path: dist
+
+        - uses: pypa/gh-action-pypi-publish@v1.4.2
+          with:
+            user: __token__
+            password: ${{ secrets.pypi_token }}
+            repository_url: https://test.pypi.org/legacy/
