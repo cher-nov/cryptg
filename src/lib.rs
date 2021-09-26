@@ -40,9 +40,17 @@ fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     Python::with_gil(|py| Ok(PyBytes::new(py, &plain).into()))
 }
 
+/// Factorizes the pair of primes ``pq`` into ``(p, q)``.
+#[pyfunction]
+#[pyo3(text_signature = "(pq)")]
+fn factorize_pq_pair(pq: u64) -> (u64, u64) {
+    grammers_crypto::factorize::factorize(pq)
+}
+
 #[pymodule]
 fn cryptg(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(encrypt_ige))?;
     m.add_wrapped(wrap_pyfunction!(decrypt_ige))?;
+    m.add_wrapped(wrap_pyfunction!(factorize_pq_pair))?;
     Ok(())
 }
