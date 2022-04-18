@@ -1,4 +1,5 @@
 include Cargo.toml
 recursive-include src *
+graft LICENSES
 global-exclude .git*
 global-exclude .git/**
