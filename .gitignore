@@ -20,5 +20,4 @@ Desktop.ini
 
 **/target
 **/*.rs.bk
-Cargo.lock
 *.so
