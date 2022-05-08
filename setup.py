@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 from setuptools_rust import RustExtension
 
 PACKAGE_NAME = "cryptg"
-PACKAGE_VERSION = "0.3"
+PACKAGE_VERSION = "0.3.1"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
 
