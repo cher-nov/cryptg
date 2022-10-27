@@ -2,9 +2,21 @@ name: Build
 
 on:
   push:
+    branches:
+      - '**'
     tags:
       - 'v*'
+  pull_request:
+    paths-ignore:
+      - 'README*'
+      - 'logo.*'
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish to PyPI'
+        default: false
+        required: true
+        type: boolean
 
 jobs:
   build_wheels:
@@ -12,8 +24,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, windows-2019, macos-10.15]
-        arch: [auto]
+        os: [ ubuntu-20.04, windows-2019, macos-10.15 ]
+        arch: [ auto ]
         include:
           - os: ubuntu-20.04
             arch: aarch64
@@ -58,15 +70,16 @@ jobs:
           path: dist/*.tar.gz
 
   upload_pypi:
-      needs: [build_wheels, build_sdist]
-      runs-on: ubuntu-20.04
-      steps:
-        - uses: actions/download-artifact@v3
-          with:
-            name: artifact
-            path: dist
+    needs: [ build_wheels, build_sdist ]
+    runs-on: ubuntu-20.04
+    if: ${{ startsWith(github.ref, 'refs/tags/v') || inputs.publish }}
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
 
-        - uses: pypa/gh-action-pypi-publish@v1.5.1
-          with:
-            user: __token__
-            password: ${{ secrets.pypi_token }}
+      - uses: pypa/gh-action-pypi-publish@v1.5.1
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_token }}
