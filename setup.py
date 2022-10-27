@@ -7,7 +7,7 @@ from setuptools import find_packages, setup
 from setuptools_rust import RustExtension
 
 PACKAGE_NAME = "cryptg"
-PACKAGE_VERSION = "0.3.1"
+PACKAGE_VERSION = "0.4.0"
 ENVVAR_VERSION_SUFFIX = "PYPI_SETUP_VERSION_SUFFIX"
 
 
@@ -51,7 +51,7 @@ def main(args):
         keywords="telegram crypto cryptography mtproto aes",
 
         packages=find_packages(),
-        python_requires=">=3.3",
+        python_requires=">=3.7",
         rust_extensions=[RustExtension("cryptg.cryptg")],
         zip_safe=False,
     )
