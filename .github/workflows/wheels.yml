@@ -24,23 +24,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2019, macos-10.15 ]
+        os: [ ubuntu-20.04, windows-2019, macos-11 ]
         arch: [ auto ]
+        rust_target: [ '' ]
         include:
           - os: ubuntu-20.04
             arch: aarch64
+            rust_target: ''
+          # FIXME: disabled due to linker issue
+          # - os: windows-2022
+          #   arch: ARM64
+          #   rust_target: 'aarch64-pc-windows-msvc'
+          - os: macos-11
+            arch: arm64
+            rust_target: 'aarch64-apple-darwin'
 
     steps:
       - name: Enable zram
         # prevent OOM killer from killing cargo (especially aarch64)
         # PERCENTAGE=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
-        if: ${{ matrix.arch == 'aarch64' }}
+        if: ${{ matrix.os == 'ubuntu-20.04' && matrix.arch == 'aarch64' }}
         run: |
           sudo apt-get update -yq
           sudo apt-get install -yq linux-modules-extra-azure zram-tools
           echo -e 'CORES=1\nPERCENTAGE=100' | sudo tee -a /etc/default/zramswap
           sudo systemctl restart zramswap
           swapon
+      - name: Add Rust cross target
+        if: ${{ matrix.rust_target != '' }}
+        run: rustup target add ${{ matrix.rust_target }}
       - uses: actions/checkout@v3
       - uses: docker/setup-qemu-action@v2
         if: ${{ matrix.arch == 'aarch64' }}
@@ -50,8 +62,8 @@ jobs:
           CIBW_BUILD_VERBOSITY: "1"
           CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && yum install -y openssl-devel"
           CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
-          CIBW_ARCHS_LINUX: ${{matrix.arch}}
-          CIBW_SKIP: cp36-* *musllinux*
+          CIBW_ARCHS: ${{matrix.arch}}
+          CIBW_SKIP: 'cp36-* *musllinux*'
 
       - uses: actions/upload-artifact@v3
         with:
