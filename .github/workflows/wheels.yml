@@ -46,7 +46,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-20.04' && matrix.arch == 'aarch64' }}
         run: |
           sudo apt-get update -yq
-          sudo apt-get install -yq linux-modules-extra-azure zram-tools
+          sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
           echo -e 'CORES=1\nPERCENTAGE=100' | sudo tee -a /etc/default/zramswap
           sudo systemctl restart zramswap
           swapon
