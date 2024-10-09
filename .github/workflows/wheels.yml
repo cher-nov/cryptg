@@ -24,11 +24,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-24.04, windows-2022, macos-15 ]
+        os: [ ubuntu-20.04, windows-2022, macos-15 ]
         arch: [ auto ]
         rust_target: [ '' ]
         include:
-          - os: ubuntu-24.04
+          - os: ubuntu-20.04
             arch: aarch64
             rust_target: ''
           - os: windows-2022
@@ -42,7 +42,7 @@ jobs:
       - name: Enable zram
         # prevent OOM killer from killing cargo (especially aarch64)
         # PERCENTAGE=100 is safe: https://fedoraproject.org/wiki/Changes/Scale_ZRAM_to_full_memory_size
-        if: ${{ matrix.os == 'ubuntu-24.04' && matrix.arch == 'aarch64' }}
+        if: ${{ matrix.os == 'ubuntu-20.04' && matrix.arch == 'aarch64' }}
         run: |
           sudo apt-get update -yq
           sudo apt-get install -yq "linux-modules-extra-$(uname -r)" zram-tools
@@ -70,19 +70,19 @@ jobs:
 
   build_sdist:
     name: Build source distribution
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
       - name: Build sdist
-        run: python3 -m pip install -r requirements.txt && python3 setup.py sdist
+        run: python -m pip install -r requirements.txt && python setup.py sdist
       - uses: actions/upload-artifact@v3
         with:
           path: dist/*.tar.gz
 
   upload_pypi:
     needs: [ build_wheels, build_sdist ]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-20.04
     if: ${{ startsWith(github.ref, 'refs/tags/v') || inputs.publish }}
     steps:
       - uses: actions/download-artifact@v3
