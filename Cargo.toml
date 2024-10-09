@@ -5,8 +5,8 @@ authors = ["Lonami Exo <totufals@hotmail.com>"]
 edition = "2018"
 
 [dependencies]
-grammers-crypto = "0.6.0"
-pyo3 = { version = "0.20.2", features = ["extension-module"] }
+grammers-crypto = "0.7.0"
+pyo3 = { version = "0.22.3", features = ["extension-module"] }
 
 [lib]
 name = "cryptg"
