@@ -2,5 +2,5 @@
 requires = [
     "setuptools-rust>=1.7.0",
     "setuptools[core]>=68.0.0",
-    "wheel>=0.44.0",
+    "wheel>=0.42.0",
 ]
