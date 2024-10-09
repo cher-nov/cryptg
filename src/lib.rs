@@ -17,7 +17,7 @@ fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     iv_array.copy_from_slice(iv);
 
     let cipher = grammers_crypto::encrypt_ige(plain, &key_array, &iv_array);
-    Python::with_gil(|py| Ok(PyBytes::new(py, &cipher).into()))
+    Python::with_gil(|py| Ok(PyBytes::new_bound(py, &cipher).into()))
 }
 
 /// Decrypts the input cipher text with the 32 bytes key and IV.
@@ -37,7 +37,7 @@ fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     iv_array.copy_from_slice(iv);
 
     let plain = grammers_crypto::decrypt_ige(cipher, &key_array, &iv_array);
-    Python::with_gil(|py| Ok(PyBytes::new(py, &plain).into()))
+    Python::with_gil(|py| Ok(PyBytes::new_bound(py, &plain).into()))
 }
 
 /// Factorizes the pair of primes ``pq`` into ``(p, q)``.
@@ -48,7 +48,7 @@ fn factorize_pq_pair(pq: u64) -> (u64, u64) {
 }
 
 #[pymodule]
-fn cryptg(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+fn cryptg(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(encrypt_ige))?;
     m.add_wrapped(wrap_pyfunction!(decrypt_ige))?;
     m.add_wrapped(wrap_pyfunction!(factorize_pq_pair))?;
