@@ -54,13 +54,13 @@ jobs:
         if: ${{ matrix.rust_target != '' }}
         run: rustup target add ${{ matrix.rust_target }}
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-qemu-action@v3
         if: ${{ matrix.arch == 'aarch64' }}
         name: Set up QEMU
-      - uses: pypa/cibuildwheel@v2.16.5
+      - uses: pypa/cibuildwheel@v2.21.2
         env:
           CIBW_BUILD_VERBOSITY: "1"
-          CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y && yum install -y openssl-devel"
+          CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y"
           CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
           CIBW_ARCHS: ${{matrix.arch}}
           CIBW_SKIP: 'cp36-* *musllinux*'
