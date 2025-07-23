@@ -57,7 +57,7 @@ jobs:
       - uses: docker/setup-qemu-action@v3
         if: ${{ matrix.arch == 'aarch64' }}
         name: Set up QEMU
-      - uses: pypa/cibuildwheel@v2.21.2
+      - uses: pypa/cibuildwheel@v3.0.1
         env:
           CIBW_BUILD_VERBOSITY: "1"
           CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y"
