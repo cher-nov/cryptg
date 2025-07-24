@@ -24,7 +24,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-20.04, windows-2022, macos-15 ]
+        os: [ ubuntu-22.04, windows-2022, macos-15 ]
         arch: [ auto ]
         rust_target: [ '' ]
         include:
