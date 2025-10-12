@@ -63,7 +63,7 @@ jobs:
           CIBW_BEFORE_ALL_LINUX: "curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain stable -y"
           CIBW_ENVIRONMENT: 'PATH="$PATH:$HOME/.cargo/bin"'
           CIBW_ARCHS: ${{matrix.arch}}
-          CIBW_SKIP: 'cp36-* pp38-* *musllinux*'
+          CIBW_SKIP: 'pp38-* *musllinux*'
           CIBW_ENABLE: 'pypy pypy-eol'
 
       - uses: actions/upload-artifact@v4
