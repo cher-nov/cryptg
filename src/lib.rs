@@ -2,8 +2,8 @@ use pyo3::{prelude::*, types::PyBytes, wrap_pyfunction};
 
 /// Encrypts the input plain text with the 32 bytes key and IV.
 #[pyfunction]
-#[pyo3(text_signature = "(plain, key, iv)")]
-fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
+#[pyo3(signature = (plain, key, iv))]
+fn encrypt_ige(py: Python, plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     let mut key_array = [0; 32];
     if key.len() != key_array.len() {
         return Err(pyo3::exceptions::PyValueError::new_err("len(key) != 32"));
@@ -17,13 +17,13 @@ fn encrypt_ige(plain: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     iv_array.copy_from_slice(iv);
 
     let cipher = grammers_crypto::encrypt_ige(plain, &key_array, &iv_array);
-    Python::with_gil(|py| Ok(PyBytes::new(py, &cipher).into()))
+    Ok(PyBytes::new(py, &cipher).into())
 }
 
 /// Decrypts the input cipher text with the 32 bytes key and IV.
 #[pyfunction]
-#[pyo3(text_signature = "(cipher, key, iv)")]
-fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
+#[pyo3(signature = (cipher, key, iv))]
+fn decrypt_ige(py: Python, cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     let mut key_array = [0; 32];
     if key.len() != key_array.len() {
         return Err(pyo3::exceptions::PyValueError::new_err("len(key) != 32"));
@@ -37,7 +37,7 @@ fn decrypt_ige(cipher: &[u8], key: &[u8], iv: &[u8]) -> PyResult<Py<PyBytes>> {
     iv_array.copy_from_slice(iv);
 
     let plain = grammers_crypto::decrypt_ige(cipher, &key_array, &iv_array);
-    Python::with_gil(|py| Ok(PyBytes::new(py, &plain).into()))
+    Ok(PyBytes::new(py, &plain).into())
 }
 
 /// Factorizes the pair of primes ``pq`` into ``(p, q)``.
