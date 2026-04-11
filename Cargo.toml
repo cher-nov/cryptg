@@ -6,7 +6,7 @@ edition = "2018"
 
 [dependencies]
 grammers-crypto = "0.7.0"
-pyo3 = { version = "0.26.0", features = ["extension-module"] }
+pyo3 = { version = "0.28.3", features = ["extension-module"] }
 
 [lib]
 name = "cryptg"
