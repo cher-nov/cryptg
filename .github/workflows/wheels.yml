@@ -31,10 +31,9 @@ jobs:
           - os: ubuntu-22.04
             arch: aarch64
             rust_target: ''
-          # FIXME: disabled due to linker issue
-          # - os: windows-2022
-          #   arch: ARM64
-          #   rust_target: 'aarch64-pc-windows-msvc'
+          - os: windows-11-arm
+            arch: ARM64
+            rust_target: 'aarch64-pc-windows-msvc'
           - os: macos-15
             arch: arm64
             rust_target: 'aarch64-apple-darwin'
